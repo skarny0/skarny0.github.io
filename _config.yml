@@ -1,0 +1,11 @@
+title: Your Site Title
+description: A description of your site
+theme: minima
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://skarny0.github.io" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
+
+plugins:
+  - jekyll-feed
