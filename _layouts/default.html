@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title | default: site.title }}</title>
     <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
   </head>
   <body>
     <div class="container">
@@ -16,19 +17,25 @@
             <li><a href="{{ '/research' | relative_url }}">Research</a></li>
             <li><a href="{{ '/projects' | relative_url }}">Projects</a></li>
             <li><a href="{{ '/hobbies' | relative_url }}">Hobbies</a></li>
+            <li><button id="theme-toggle">🌓</button></li>
           </ul>
         </nav>
       </header>
       <main>
-        <img src="{{ '/assets/images/profile.jpg' | relative_url }}" alt="Sheer Karny" class="profile-pic">
-        <h1>Hey.<br>I'm {{ site.title }}</h1>
-        <div class="social-links">
-          <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-          <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-          <a href="#" target="_blank"><i class="far fa-envelope"></i></a>
-          <!-- Add more social links as needed -->
+        {% if page.url == "/" %}
+          <div id="intro-content">
+            <img src="{{ '/assets/images/profile-nepal.jpg' | relative_url }}" alt="Sheer Karny" class="profile-pic">
+            <h1>Hey.<br>I'm {{ site.title }}</h1>
+            <div class="social-links">
+              <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+              <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+              <a href="#" target="_blank"><i class="far fa-envelope"></i></a>
+            </div>
+          </div>
+        {% endif %}
+        <div id="page-content">
+          {{ content }}
         </div>
-        {{ content }}
       </main>
       <footer>
         <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>

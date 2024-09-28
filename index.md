@@ -1,8 +1,8 @@
 ---
 layout: default
-title: About Me
+title: Home
 ---
 
 # About Me
 
-{% include_relative about.md %}
+hi! i'm a junior specialist at uci focusing on building socially competent ai agents that are super good at collaborating in dynamic environments.

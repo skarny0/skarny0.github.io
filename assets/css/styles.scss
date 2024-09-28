@@ -1,6 +1,8 @@
 ---
 ---
 
+@import "minima";
+
 :root {
   --bg-color: #ffffff;
   --text-color: #333333;
@@ -10,15 +12,13 @@
   --container-bg: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #121212;
-    --text-color: #e0e0e0;
-    --header-bg: #1e1e1e;
-    --link-color: #4fc3f7;
-    --hover-color: #81d4fa;
-    --container-bg: #1e1e1e;
-  }
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --header-bg: #1e1e1e;
+  --link-color: #4fc3f7;
+  --hover-color: #81d4fa;
+  --container-bg: #1e1e1e;
 }
 
 body {
@@ -31,6 +31,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -42,6 +43,7 @@ body {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.3s ease;
 }
 
 header {
@@ -49,6 +51,7 @@ header {
   background-color: var(--header-bg);
   padding: 20px;
   text-align: center;
+  transition: background-color 0.3s ease;
 }
 
 nav {
@@ -63,16 +66,22 @@ nav ul {
 }
 
 nav ul li {
-  margin: 0 15px;
+  margin: 0 10px;
 }
 
 nav ul li a {
   color: var(--text-color);
   text-decoration: none;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
+  color: var(--hover-color);
+}
+
+nav ul li a:active,
+nav ul li a.active {
   color: var(--hover-color);
 }
 
@@ -80,10 +89,12 @@ main {
   background-color: var(--container-bg);
   padding: 20px;
   flex-grow: 1;
+  transition: background-color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--text-color);
+  transition: color 0.3s ease;
 }
 
 h1 {
@@ -110,8 +121,7 @@ h1 {
 
 .social-links a {
   color: var(--text-color);
-  font-size: 1.5em;
-  margin: 0 10px;
+  transition: color 0.3s ease;
 }
 
 .social-links a:hover {
@@ -128,21 +138,37 @@ h2 {
 a {
   color: var(--link-color);
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 a:hover {
   text-decoration: underline;
+  color: var(--hover-color);
 }
 
 footer {
   margin-top: 50px;
   text-align: center;
   font-size: 0.9em;
-  color: #888;
+  color: var(--text-color);
   background-color: var(--header-bg);
   padding: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 p {
-  color: #e0e0e0;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+#intro-content {
+  transition: opacity 0.3s ease-in-out;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.5em;
+  cursor: pointer;
 }
