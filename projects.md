@@ -5,7 +5,6 @@ title: Projects
 
 # Projects
 
-Here are some of the personal and academic projects I've worked on:
 
 ## Collab-AI 
 
@@ -16,6 +15,4 @@ Here are some of the personal and academic projects I've worked on:
 ## Senior Honors Thesis
 
 ## UsedSurf BoardSearch Program
-
-
 
