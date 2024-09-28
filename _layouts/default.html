@@ -3,27 +3,35 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }}</title>
+    <title>{{ page.title | default: site.title }}</title>
     <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   </head>
   <body>
     <div class="container">
       <header>
-        <h1>{{ site.title }}</h1>
         <nav>
           <ul>
-            <li><a href="{{ '/' | relative_url }}">about</a></li>
-            <li><a href="{{ '/research' | relative_url }}">research</a></li>
-            <li><a href="{{ '/projects' | relative_url }}">projects</a></li>
-            <li><a href="{{ '/hobbies' | relative_url }}">hobbies</a></li>
+            <li><a href="{{ '/' | relative_url }}">Home</a></li>
+            <li><a href="{{ '/research' | relative_url }}">Research</a></li>
+            <li><a href="{{ '/projects' | relative_url }}">Projects</a></li>
+            <li><a href="{{ '/hobbies' | relative_url }}">Hobbies</a></li>
           </ul>
         </nav>
       </header>
       <main>
+        <img src="{{ '/assets/images/profile.jpg' | relative_url }}" alt="Sheer Karny" class="profile-pic">
+        <h1>Hey.<br>I'm {{ site.title }}</h1>
+        <div class="social-links">
+          <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="#" target="_blank"><i class="far fa-envelope"></i></a>
+          <!-- Add more social links as needed -->
+        </div>
         {{ content }}
       </main>
       <footer>
-        <p>© {{ site.time | date: '%Y' }} {{ site.title }}</p>
+        <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
       </footer>
     </div>
   </body>
