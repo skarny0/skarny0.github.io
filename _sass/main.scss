@@ -1,1 +1,12 @@
-body { font-family: Arial, sans-serif; }
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+
+.about {
+    color: #333;
+    font-size: 10em;
+}

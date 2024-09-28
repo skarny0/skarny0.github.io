@@ -1,0 +1,1 @@
+Hi! I'm a junior specialist at uci focusing on building socially competent ai agents that are super good at collaborating in dynamic environments. 
