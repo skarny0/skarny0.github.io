@@ -250,6 +250,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (1.8.0)
+    wdm (0.1.1)
     zeitwerk (2.6.15)
 
 PLATFORMS
@@ -257,8 +258,14 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages
+  http_parser.rb (~> 0.6.0)
   jekyll (~> 3.9.0)
+  jekyll-feed (~> 0.12)
+  jekyll-seo-tag (~> 2.6)
   minima (~> 2.5)
+  tzinfo (~> 1.2)
+  tzinfo-data
+  wdm (~> 0.1.1)
 
 BUNDLED WITH
    1.17.2
