@@ -1,17 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
   </head>
   <body>
-    <header>
-      <h1>{{ site.title }}</h1>
-    </header>
-    <main>
-      {{ content }}
-    </main>
-    <footer>
-      <p>© 2024 {{ site.title }}</p>
-    </footer>
+    <div class="container">
+      <header>
+        <h1>{{ site.title }}</h1>
+        <nav>
+          <ul>
+            <li><a href="{{ '/' | relative_url }}">about</a></li>
+            <li><a href="{{ '/research' | relative_url }}">research</a></li>
+            <li><a href="{{ '/projects' | relative_url }}">projects</a></li>
+            <li><a href="{{ '/hobbies' | relative_url }}">hobbies</a></li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        {{ content }}
+      </main>
+      <footer>
+        <p>© {{ site.time | date: '%Y' }} {{ site.title }}</p>
+      </footer>
+    </div>
   </body>
 </html>
