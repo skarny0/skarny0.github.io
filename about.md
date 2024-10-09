@@ -5,3 +5,5 @@ I'm keen to see how Theory of Mind (ToM), knowing and reasoning about other's mi
 My interests also extend into the world of brain-computer interfaces.
 
 If you think our interests align, then do reach out!
+
+skarny [at] uci [dot] edu
