@@ -5,4 +5,10 @@ title: Home
 
 # About Me
 
-hi! i'm a junior specialist at uci focusing on building socially competent ai agents that are super good at collaborating in dynamic environments.
+I'm currently a pre-doctorate ressearcher at the University of California, Irvine advised by Prof. Mark Steyvers working on problems related to Human-AI collaboration! Prior to this, I graduated with honors from the University of California, Berkeley, earning a B.A. in Cognitive Science with a minor in Data Science.
+
+I'm keen to see how Theory of Mind (ToM), knowing and reasoning about other's minds/mental states, can be infused into AI systems with the goal of improving Human-AI collaboration. 
+
+My interests also extend into the world of brain-computer interfaces.
+
+If you think our interests align, then do reach out!
