@@ -3,6 +3,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   This is my Jekyll site created to test and learn.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://sheerkarny.github.io" # Update this to your GitHub Pages URL
+cv_url: "/assets/SheerKarny_CV.pdf"
 
 markdown: kramdown
 theme: minima

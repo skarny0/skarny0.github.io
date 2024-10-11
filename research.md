@@ -5,16 +5,16 @@ title: Research
 
 # research
 
-my research focuses on developing AI agents capable of effective collaboration in dynamic environments. here are some of my current research areas:
+My research focuses on developing AI agents capable of effective collaboration in dynamic environments. Here are some of my current research areas:
 
 ## collaborative agents
-investigating methods to create ai systems that can work alongside humans in dynamic task settings.
+Investigating methods to create ai systems that can work alongside humans in dynamic task settings.
 
 ## adaptive decision-making
-developing algorithms that allow ai agents to make robust decisions in uncertain and rapidly changing environments.
+Developing algorithms that allow ai agents to make robust decisions in uncertain and rapidly changing environments.
 
 ## theory of mind 
-buildling out better models of human cognition to understand people's underlying goals and preferences.
+Buildling out better models of human cognition to understand people's underlying goals and preferences.
 
 ## publications
 
@@ -34,8 +34,7 @@ Lukas William Mayer, Xinyue Hu, Padhraic Smyth. The Calibration Gap Between Mode
 Large Language Models. 2024. Jan, 2024, arXiv, cs.LG, 2401.13835.
 
 ### posters
-Elizabeth Cisneros, Jonathan Tsay, Sheer Karny, Richard Ivry. Differential effect of age on implicit and explicit motor
-learning processes. Neural Control of Movement Conference (NCM ’23), April 18-23, 2023, Victoria, BC, Canada.
+Elizabeth Cisneros, Jonathan Tsay, Sheer Karny, Richard Ivry. Differential effect of age on implicit and explicit motor learning processes. Neural Control of Movement Conference (NCM ’23), April 18-23, 2023, Victoria, BC, Canada.
 
 ### talks
 “Learning with AI Assistance”. Talk at the ACM Collective Intelligence Conference (CI ’24); Human-AI Teaming

@@ -5,14 +5,13 @@ title: Projects
 
 # Projects
 
-
 ## Collab-AI 
+
+![Collab-AI Demo Video](assets/videos/collab-ai-demo.mp4)
 
 ## AI Assistance
 
-## Dynamic Task Environments
-
-## Senior Honors Thesis
+![AI Assistance Demo](assets/videos/ai-assistance-demo.mp4)
 
 ## UsedSurf BoardSearch Program
 
