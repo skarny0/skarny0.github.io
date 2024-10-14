@@ -6,7 +6,7 @@ title: Projects
 # Projects
 
 ## Collab-AI 
-Built a two-player task where a human and an AI agent play together. Designed collaborative agent types using principles from the literature to see which design characteristics are best suited for human colalboration. Paper coming soon!
+Built a two-player task where a human and an AI agent play together. Designed collaborative agent types using principles from the literature to see which design characteristics are best suited for human collaboration. Paper coming soon!
 
 ![Collab-AI Demo Video](assets/videos/collab-ai-demo.mp4)
 
