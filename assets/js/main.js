@@ -32,10 +32,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function toggleIntroContent(url) {
-      if (url === '/' || url === '') {
-        introContent.style.display = 'block';
-      } else {
-        introContent.style.display = 'none';
+      if (introContent) {
+        if (url === '/' || url === '') {
+          introContent.style.display = 'block';
+        } else {
+          introContent.style.display = 'none';
+        }
       }
     }
 
