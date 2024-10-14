@@ -1,3 +1,11 @@
+---
+layout: default
+title: Projects
+---
+
+# Hobbies
+
+
 After finishing my undergrad, I spent eight months backpacking around Nepal (3 mo.) and India (5 mo.). Much of this was time spent walking in the Himalayas and riding trains. At one point I taught Neuroscience to a group of Tibettan Buddhist Nuns. I even took some photos!
 
 Surf trips are a must as well!

@@ -3,7 +3,7 @@ layout: default
 title: Research
 ---
 
-# research
+# Research
 
 My research focuses on developing AI agents capable of effective collaboration in dynamic environments. Here are some of my current research areas:
 
