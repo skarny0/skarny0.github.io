@@ -47,6 +47,12 @@ Last year (Dec '23) I drove about 20 hours south into Baja California, much of i
     <img src="{{ '/assets/images/20240101_143804.jpg' | relative_url }}" alt=" train rides" onclick="expandImage(this)">
     <figcaption>Deep in Baja</figcaption>
   </figure>
+
+   <figure>
+    <img src="{{ '/assets/images/20231229_175916.jpg' | relative_url }}" alt=" train rides" onclick="expandImage(this)">
+    <figcaption>Deep in Baja</figcaption>
+  </figure>
+  
 </div>
 
 <div id="imageModal" class="modal">
