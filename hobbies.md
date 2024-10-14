@@ -8,7 +8,7 @@ title: Projects
 
 After finishing my undergrad, I spent eight months backpacking around Nepal (3 mo.) and India (5 mo.). Much of this was time spent walking in the Himalayas and riding trains. At one point I taught Neuroscience to a group of Tibettan Buddhist Nuns. I even took some photos!
 
-Last year (Dec '23) I drove about 20 hours south into Baja California, much of it off-road, to find some swell. Luckily, we did and absolutely scored four days of pumping waves!
+Last year (Dec '23) I drove about 20 hours south into Baja California, much of it off-road, to find some swell. Luckily, we did and scored four days of pumping waves!
 
 
 ## Photo Gallery
