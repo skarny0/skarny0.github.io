@@ -243,7 +243,10 @@ footer { margin-top: 50px; text-align: center; font-size: 0.9em; color: var(--te
 
 p { color: var(--text-color); transition: color 0.3s ease; }
 
-#intro-content { transition: opacity 0.3s ease-in-out; text-align: center; }
+#intro-content { transition: opacity 0.3s ease-in-out; display: flex; align-items: center; gap: 2rem; margin: 2rem 0; }
+@media (max-width: 767px) { #intro-content { flex-direction: column; text-align: center; } }
+#intro-content .profile-section { flex-shrink: 0; }
+#intro-content .intro-text { flex-grow: 1; }
 
 #theme-toggle { background: none; border: none; color: var(--text-color); font-size: 1.5em; cursor: pointer; }
 

@@ -187,7 +187,23 @@ p {
 
 #intro-content {
   transition: opacity 0.3s ease-in-out;
-  text-align: center; // Center the intro content
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+
+  @include mobile {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-section {
+    flex-shrink: 0;
+  }
+
+  .intro-text {
+    flex-grow: 1;
+  }
 }
 
 #theme-toggle {
