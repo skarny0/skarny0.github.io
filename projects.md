@@ -5,16 +5,14 @@ title: Projects
 
 # Projects
 
-## __Task building for Human-AI Exploration__
-
-### __Single-player AI assistance__
+## __Single-player AI assistance__
 Built a real-time AI assistant that helps players learn a dynamic decision making task. It is an approximation to a traveling salesman problem with moving destinations. Work related to this was published at the ACM Collective Intelligence Conference.
 
 
 ![Task Illustration]({{ '/assets/images/task_illustration.png' | relative_url }})
 *Player must execute interceptions with and without AI assistance.*
 
-### __Multiplayer Collaboration__
+## __Multiplayer Collaboration__
 We built a dynamic decision-making task where the goal is to intercept as many moving, point-valued targets as possible. 
 
 Initially designed as an AI assistance paradigm for a previous paper, it was refitted to be a two-player collaboration task.
