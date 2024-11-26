@@ -19,7 +19,7 @@ Current manuscript is under development!
 Also developing software to extend this to online human-to-human collaboration. 
 
 ![Task Illustration]({{ '/assets/images/game-view-edited.png' | relative_url }})
-*A Human (red avatar) work alongside an AI collaborator (green avatar) to get as many points as possible. Current manuscript designs agents with varying levels of consdieration for the human player to discover the subjective, non-perforamnce driven, traits of AI agents that make them good collaborators.*
+*A Human (red avatar) work alongside an AI collaborator (green avatar) to get as many points as possible. Current manuscript designs agents with varying levels of consideration for the human player to discover the subjective, non-perforamnce driven, traits of AI agents that make them good collaborators.*
 
 
 
