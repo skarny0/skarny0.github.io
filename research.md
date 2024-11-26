@@ -10,7 +10,10 @@ title: Research
 
 ## Publications
 
-### __Conference proceedings/journals__
+### __Conference proceedings and journal articles (* denotes equal contribution)__
+
+(in submission) Lukas William Mayer\*, __Sheer Karny\*__, Jackie Ayoub, Yuchen Yan, Miao Song, Danyang Tian, Ehsan Moradi-Pari, Mark Steyvers. Human-AI Collaboration: Trade-offs Between Performance and Preference. Manuscript currently unavailable.
+
 __Sheer Karny__, Lukas William Mayer, Jackie Ayoub, Miao Song, Haotian Su, Danyang Tian, Ehsan Moradi-Pari, and
 Mark Steyvers. 2024. Learning with AI Assistance: A Path to Better Task Performance or Dependence?. In Collective
 Intelligence Conference (CI '24), June 27–28, 2024, Boston, MA, USA. ACM, New York, NY, USA, 8 pages.
@@ -21,9 +24,10 @@ Intelligence Conference (CI '24), June 27–28, 2024, Boston, MA, USA. ACM, New 
 Differential Aging Effects on Implicit and Explicit Sensorimotor Learning. In bioRxiv (p. 2024.07.02.601091).
 [https://doi.org/10.1101/2024.07.02.601091](https://doi.org/10.1101/2024.07.02.601091)
 
-(in-review @ Nat. Mach. Intl.) Mark Steyvers, Heliodoro Tejeda, Aakriti Kumar, Catarina Belem, __Sheer Karny__,
-Lukas William Mayer, Xinyue Hu, Padhraic Smyth. The Calibration Gap Between Model and Human Confidence in
-Large Language Models. 2024. Jan, 2024, arXiv, cs.LG, [2401.13835](https://arxiv.org/abs/2401.13835).
+(accepted @ Nat. Mach. Intl.) Mark Steyvers, Heliodoro Tejeda, Aakriti Kumar, Catarina Belem, __Sheer Karny__,
+Lukas William Mayer, Xinyue Hu, Padhraic Smyth. What Large Language Models Know and What People Think They Know. 2024. Jan, 2024, arXiv, cs.LG, [2401.13835](https://arxiv.org/abs/2401.13835).
+
+_Previously was called ``The Calibration Gap Between Model and Human Confidence in Large Language Models''_
 
 ### __Posters__
 Elizabeth Cisneros, Jonathan Tsay, __Sheer Karny__, Richard Ivry. Differential effect of age on implicit and explicit motor learning processes. Neural Control of Movement Conference (NCM ’23), April 18-23, 2023, Victoria, BC, Canada.
