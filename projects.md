@@ -22,9 +22,6 @@ Also developing software to extend this to online human-to-human collaboration.
 *A Human (red avatar) work alongside an AI collaborator (green avatar) to get as many points as possible. Current manuscript designs agents with varying levels of consideration for the human player to discover the subjective, non-perforamnce driven, traits of AI agents that make them good collaborators.*
 
 
-
-<!-- ![Video Description](./assets/images/full-view-bf.mp4) -->
-
 ## __Personal Projects__
 
 ### __UsedSurf BoardSearch__
