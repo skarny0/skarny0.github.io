@@ -8,10 +8,9 @@ title: Research
 * Developing algorithms that allow AI agents to make robust decisions in uncertain and rapidly changing environments.
 * Buildling out better models of human cognition to understand people's underlying goals and preferences.
 
-## Publications __(* denotes equal contribution)__
+## Publications 
 
-### __Conference proceedings and journal articles (* denotes equal contribution)__
-
+#### _(* denotes equal contribution)_
 
 (in-review) __Sheer Karny__, Jackie Ayoub, Miao Song, Danyang Tian, and Mark Steyvers. 
 (2025). Can Explainability Benefit Human-AI Collaboration? Manuscript currently unavailable.
@@ -19,8 +18,8 @@ title: Research
 (in review) Lukas William Mayer\*, __Sheer Karny\*__, Jackie Ayoub, Miao Song, Danyang Tian, Ehsan Moradi-Pari, Mark Steyvers. 
 (2025). Human-AI Collaboration: Trade-offs Between Performance and Preferences. arXiv preprint. [arXiv:2503.00248](https://arxiv.org/abs/2503.00248).
 
-(in-review) Elizabeth Cisneros, __Sheer Karny__, Richard B. Ivry, Jonathan S. Tsay.
-Differential Aging Effects on Implicit and Explicit Sensorimotor Learning. bioRxiv : the preprint server for biology 2024.07.02.601091.
+(in-review) Elizabeth Cisneros, __Sheer Karny__, Richard B. Ivry, Jonathan S. Tsay. 
+(2024). Differential Aging Effects on Implicit and Explicit Sensorimotor Learning. bioRxiv : the preprint server for biology 2024.07.02.601091.
 [https://doi.org/10.1101/2024.07.02.601091](https://doi.org/10.1101/2024.07.02.601091)
 
 __Sheer Karny__, Lukas William Mayer, Jackie Ayoub, Miao Song, Haotian Su, Danyang Tian, Ehsan Moradi-Pari, and
