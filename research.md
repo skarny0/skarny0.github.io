@@ -31,8 +31,6 @@ Intelligence Conference (CI '24), June 27–28, 2024, Boston, MA, USA. ACM, New 
 Mark Steyvers, Heliodoro Tejeda, Aakriti Kumar, Catarina Belem, __Sheer Karny__, Lukas William Mayer, Xinyue Hu, Padhraic Smyth. 
 What large language models know and what people think they know. Nat Mach Intell 7, 221–231 (2025).[https://doi.org/10.1038/s42256-024-00976-7](https://doi.org/10.1038/s42256-024-00976-7)
 
-_Previously was called ``The Calibration Gap Between Model and Human Confidence in Large Language Models''_
-
 ### __Posters__
 Elizabeth Cisneros, Jonathan Tsay, __Sheer Karny__, Richard Ivry. Differential effect of age on implicit and explicit motor learning processes. Neural Control of Movement Conference (NCM ’23), April 18-23, 2023, Victoria, BC, Canada.
 
