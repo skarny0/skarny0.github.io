@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 
-# Updates as of 4/07/25
+### Updates as of 4/07/25
 
 I'm currently/still a researcher at the University of California, Irvine advised by Prof. Mark Steyvers working on problems related to Human-AI collaboration! Prior to this, I graduated with honors from the University of California, Berkeley, earning a B.A. in Cognitive Science with a minor in Data Science.
 
