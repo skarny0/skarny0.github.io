@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const talks = (await getCollection('publications'))
+  .filter((p) => p.data.type === 'talk')
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+
+const media = [
+  { outlet: 'The New York Times', title: 'I Fell in Love With an A.I. Chatbot', date: 'Nov 2025' },
+  { outlet: 'The Guardian', title: '’I’m suddenly so angry’: my strange, unnerving week with an AI friend', date: 'Oct 2025' },
+  { outlet: 'Observer', title: 'MIT Study Finds Chatbot Love Is Real—and It’s Often Unintentional', date: 'Sep 2025' },
+  { outlet: 'MIT Technology Review', title: 'People are finding relationship AI without even seeking it', date: 'Sep 2025' },
+];
+---
+
+<Layout title="Talks & Media — Sheer Karny" active="talks">
+  <Fragment slot="hero">
+    <div class="hero-inner">
+      <div class="label crumb">§ Talks &amp; Media</div>
+      <h1>Presentations &amp; coverage</h1>
+    </div>
+  </Fragment>
+
+  <section class="section">
+    <div class="label">Talks</div>
+    <div class="talk-list">
+      {talks.map((t) => (
+        <div class="talk-row">
+          <div>
+            <div class="talk-title">“{t.data.title}”</div>
+            <div class="talk-where">{t.data.venue}</div>
+          </div>
+          <span class="talk-meta">{t.data.meta}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="label">Selected media</div>
+    <div class="media-list">
+      {media.map((m) => (
+        <div class="media-row">
+          <span class="media-outlet">{m.outlet}</span>
+          <span class="media-title">{m.title}</span>
+          <span class="media-date">{m.date}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .talk-list,.media-list{display:flex;flex-direction:column}
+  .talk-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:20px 0;border-top:1px solid var(--hair-row)}
+  .talk-title{font-size:20px;font-weight:500;line-height:1.35}
+  .talk-where{font-size:15px;color:var(--muted);margin-top:4px}
+  .talk-meta{font-family:var(--two);font-weight:500;font-size:12px;color:var(--faint);padding-top:6px;white-space:nowrap}
+  .media-row{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr) auto;gap:20px;padding:18px 0;border-top:1px solid var(--hair-row);align-items:baseline}
+  .media-outlet{font-family:var(--two);font-weight:500;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+  .media-title{font-size:18px;line-height:1.4;text-wrap:pretty}
+  .media-date{font-family:var(--two);font-weight:500;font-size:12px;color:var(--faint);white-space:nowrap}
+</style>

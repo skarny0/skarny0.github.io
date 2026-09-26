@@ -1,0 +1,325 @@
+---
+interface Props {
+  active?: 'home' | 'pubs' | 'talks' | 'projects';
+}
+const { active } = Astro.props;
+const current = (key: string) => (active === key ? 'page' : undefined);
+---
+
+<header class="site-header" data-activation-header>
+  <div class="probe-card" hidden>
+    <div class="probe-word"></div>
+    <p class="probe-text"></p>
+    <div class="probe-papers"></div>
+  </div>
+  <canvas aria-hidden="true"></canvas>
+  <nav class="site-nav">
+    <div class="links">
+      <a href="/" aria-current={current('home')}>About</a>
+      <a href="/publications" aria-current={current('pubs')}>Publications</a>
+      <a href="/talks" aria-current={current('talks')}>Talks &amp; Media</a>
+      <a href="/projects" aria-current={current('projects')}>Projects</a>
+      <a href="/SheerKarny_CV.pdf" target="_blank">CV ↗</a>
+    </div>
+  </nav>
+  <slot />
+</header>
+
+<script>
+  const header = document.querySelector('[data-activation-header]') as HTMLElement;
+  const canvas = header.querySelector('canvas') as HTMLCanvasElement;
+  const card = header.querySelector('.probe-card') as HTMLElement;
+  const cardWordEl = card.querySelector('.probe-word') as HTMLElement;
+  const cardTextEl = card.querySelector('.probe-text') as HTMLElement;
+  const cardPapersEl = card.querySelector('.probe-papers') as HTMLElement;
+
+  const notes: Record<string, { text: string; papers: { paper: string; venue: string; url: string }[] }> = {
+    'calibration & mental models': {
+      text: 'How people build a picture of what an AI system knows and how it will behave, and how to close the gap when that picture is wrong.',
+      papers: [
+        { paper: 'What large language models know and what people think they know', venue: 'Nature Machine Intelligence, 2025', url: 'https://doi.org/10.1038/s42256-024-00976-7' },
+        { paper: 'Multi-Turn Neural Transparency', venue: 'Under review, 2026', url: 'https://arxiv.org/abs/2605.15455' },
+      ],
+    },
+    'ai safety & interpretability': {
+      text: 'Using mechanistic interpretability to surface what is happening inside a model, and bringing it into the interface where users can act on it.',
+      papers: [
+        { paper: 'Neural Transparency: Mechanistic Interpretability Interfaces for Anticipating Model Behaviors', venue: 'ACM IUI ’26', url: 'https://doi.org/10.1145/3742413.3789120' },
+        { paper: 'Dissociating the Internal Representations of Sycophancy in LLMs', venue: 'ICML ’26 Mech. Interp. Workshop', url: 'https://arxiv.org/abs/2607.07003' },
+        { paper: 'What If AI Lived Inside Your Mind?', venue: 'Augmented Humans ’26', url: '' },
+      ],
+    },
+    'human–ai collaboration': {
+      text: 'When working with AI makes people better at a task, when it makes them dependent, and what they prefer along the way.',
+      papers: [
+        { paper: 'Learning with AI Assistance: A Path to Better Task Performance or Dependence?', venue: 'ACM CI ’24', url: 'https://doi.org/10.1145/3643562.3672610' },
+        { paper: 'Human–AI collaboration: Trade-offs between performance and preferences', venue: 'Cognitive Research: P&I, 2026', url: '' },
+      ],
+    },
+    'companionship & well-being': {
+      text: 'The individual and societal implications of people forming relationships with AI, and of everyday LLM use over time.',
+      papers: [
+        { paper: '“My Boyfriend is AI”', venue: 'arXiv pre-print, 2025', url: 'https://arxiv.org/abs/2509.11391' },
+        { paper: 'AI-Wrapped: Measurement of Longitudinal LLM Use In-the-Wild', venue: 'CHI ’26 Bi-Align Workshop', url: 'https://arxiv.org/abs/2602.18415' },
+      ],
+    },
+  };
+
+  const MODE = 'activations';
+  const GAP = 22;
+  const SPEED = 1;
+  const WORDS = ['Calibration & Mental Models', 'AI Safety & Interpretability', 'Human–AI Collaboration', 'Companionship & Well-being'];
+
+  const ctx = canvas.getContext('2d')!;
+  let W = 0, H = 0;
+
+  const pulses: { x: number; y: number; t0: number }[] = [];
+  let last = 0;
+  const off = document.createElement('canvas');
+  const octx = off.getContext('2d', { willReadFrequently: true })!;
+  let cycleN = 0, maskKey = '', word = '', wordIdx = -1, cycleStart = 0;
+  let mask: Uint8ClampedArray | null = null;
+  let box: any = null;
+  let waNow = 0, onCard = false, scrollLock = 0, raf = 0, cycleTimer = 0;
+  let closeT: ReturnType<typeof setTimeout> | undefined;
+  let probe: { word: string; top: number; left: number; w: number } | null = null;
+  const reducedMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let reduced = reducedMq.matches;
+
+  const hash = (x: number, y: number) => { const v = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453; return v - Math.floor(v); };
+
+  const buildMask = (w: number, h: number, txt: string) => {
+    off.width = Math.max(1, Math.floor(w)); off.height = Math.max(1, Math.floor(h));
+    octx.clearRect(0, 0, off.width, off.height);
+    const F = (f: number) => '800 ' + f + 'px "Open Sauce Sans", "Helvetica Neue", Arial, sans-serif';
+    const cr = canvas.getBoundingClientRect();
+    const zone = header.querySelector('[data-topic-zone]');
+    if (!zone || cr.width < 700) { mask = null; box = null; return; }
+    const zr = zone.getBoundingClientRect();
+    const nav = header.querySelector('nav');
+    const h1el = header.querySelector('h1');
+    const wrapped = h1el && zr.top >= h1el.getBoundingClientRect().bottom;
+    const zx0 = zr.left - cr.left + (wrapped ? 0 : 8), zx1 = wrapped ? zr.right - cr.left : cr.width - 40;
+    const zy0 = wrapped ? zr.top - cr.top : (nav ? nav.getBoundingClientRect().bottom - cr.top : 80) + 20;
+    const zy1 = wrapped ? zr.bottom - cr.top - 24 : cr.height - 40;
+    const visBottom = Math.min(zy1, window.innerHeight - cr.top - 380);
+    const zyEnd = visBottom - zy0 >= 140 ? visBottom : zy1;
+    const zw = zx1 - zx0, zh = zyEnd - zy0;
+    if (zw < 160 || zh < 40) { mask = null; box = null; return; }
+    const parts = txt.split(' ');
+    const wrap = (f: number) => { octx.font = F(f); const out = []; let cur = ''; for (const p of parts) { const t = cur ? cur + ' ' + p : p; if (octx.measureText(t).width <= zw || !cur) cur = t; else { out.push(cur); cur = p; } } if (cur) out.push(cur); return out; };
+    const wrapW = (f: number) => { octx.font = F(f); const out = []; let cur = ''; for (const p of parts) { const t = cur ? cur + ' ' + p : p; if (octx.measureText(t).width <= zw * (0.55 + Math.random() * 0.4) || !cur) cur = t; else { out.push(cur); cur = p; } } if (cur) out.push(cur); return out; };
+    let fs = 52 + Math.round(Math.random() * 48), lines = wrapW(fs);
+    while (fs > 20 && (lines.length > 4 || lines.length * fs * 1.02 > zh || lines.some(l => octx.measureText(l).width > zw))) { fs -= 2; lines = wrap(fs); }
+    octx.font = F(fs); octx.textBaseline = 'alphabetic'; octx.fillStyle = '#000';
+    const lh = fs * 1.02, capH = fs * 0.74;
+    const widths = lines.map(t => octx.measureText(t).width), bw = Math.max(...widths), bh = capH + (lines.length - 1) * lh;
+    const align = Math.random() < 0.5 ? 'left' : 'right';
+    const bx0 = zx0 + Math.random() * Math.max(0, zw - bw), bx1 = bx0 + bw;
+    const by0 = zy0 + Math.random() * Math.max(0, zh - bh);
+    octx.textAlign = 'left';
+    const L = lines.map((t, i) => { const base = by0 + capH + i * lh; const lw = widths[i]; const lx = align === 'left' ? bx0 : bx1 - lw; octx.fillText(t, lx, base); return { x0: lx, x1: lx + lw, top: base - capH, base }; });
+    box = { x: bx1, x0: bx0, y: L[L.length - 1].base, fs, tw: bw, top: L[0].top, lines: L, align };
+    mask = octx.getImageData(0, 0, off.width, off.height).data;
+  };
+
+  const cover = (x: number, y: number, r: number) => {
+    if (!mask) return 0; let c = 0, n = 0;
+    for (let dy = -r; dy <= r; dy += r) for (let dx = -r; dx <= r; dx += r) {
+      const px = Math.round(x + dx), py = Math.round(y + dy); n++;
+      if (px >= 0 && py >= 0 && px < off.width && py < off.height && mask[(py * off.width + px) * 4 + 3] > 100) c++;
+    }
+    return c / n;
+  };
+
+  const norm = (t: string) => String(t).toLowerCase().replace(/\band\b/g, '&').replace(/[‐-―-]/g, '-').replace(/[^a-z&-]+/g, ' ').trim();
+  const noteKey = (t: string) => { const n = norm(t); return Object.keys(notes).find(k => norm(k) === n) || Object.keys(notes).find(k => norm(k).split(' ')[0] === n.split(' ')[0]); };
+
+  const openProbe = (nk: string, top: number, left: number, w: number) => {
+    probe = { word: nk, top, left, w };
+    cardWordEl.textContent = nk;
+    cardTextEl.textContent = notes[nk].text;
+    cardPapersEl.textContent = '';
+    for (const pp of notes[nk].papers) {
+      const item = document.createElement('div');
+      const a = document.createElement('a');
+      a.className = 'probe-paper';
+      if (pp.url) { a.href = pp.url; a.target = '_blank'; }
+      a.textContent = pp.paper;
+      const v = document.createElement('div');
+      v.className = 'probe-paper-venue';
+      v.textContent = pp.venue;
+      item.append(a, v);
+      cardPapersEl.append(item);
+    }
+    card.style.top = top + 'px'; card.style.left = left + 'px'; card.style.width = w + 'px';
+    card.hidden = false;
+    if (reduced) staticFrame();
+  };
+  const hideCard = () => { if (probe) { probe = null; card.hidden = true; if (reduced) staticFrame(); } };
+  const closeNow = () => { clearTimeout(closeT); onCard = false; hideCard(); };
+  const scheduleClose = () => { clearTimeout(closeT); closeT = setTimeout(() => { if (!onCard) hideCard(); }, 140); };
+
+  const hit = (e: MouseEvent) => {
+    const cr = canvas.getBoundingClientRect(), mx = e.clientX - cr.left, my = e.clientY - cr.top;
+    const b = box, st = b ? Math.max(4.5, b.fs / 11) : 0;
+    const inside = b && mask && waNow > 0.15 && mx > b.x - b.tw - st * 2 && mx < b.x + st * 2 && my > b.top - st * 2 && my < b.y + st * 3;
+    if (performance.now() < scrollLock) return;
+    const nk = noteKey(word);
+    header.style.cursor = inside && nk ? 'help' : '';
+    if (inside && nk) {
+      clearTimeout(closeT);
+      if (!probe || probe.word !== nk) {
+        const top = b.y + st * 2;
+        const w = Math.min(380, cr.width - 32);
+        const need = cr.top + top + 380 - window.innerHeight;
+        if (need > 0) { scrollLock = performance.now() + 700; window.scrollBy({ top: need, behavior: 'smooth' }); }
+        openProbe(nk, top, Math.max(16, Math.min(cr.width - w - 16, mx - 190)), w);
+      }
+    } else if (probe && !onCard) {
+      const p = probe;
+      const toward = b && my >= b.y - st && my <= p.top + 24 && mx >= p.left - 8 && mx <= p.left + p.w + 8;
+      if (toward) scheduleClose(); else closeNow();
+    }
+  };
+  const leaveHdr = (e: MouseEvent) => { header.style.cursor = ''; const rt = e.relatedTarget as Element | null; const toCard = rt && rt.closest && rt.closest('.probe-card'); if (!toCard) closeNow(); };
+  const esc = (e: KeyboardEvent) => { if (e.key === 'Escape' && probe) closeNow(); };
+  const clickHit = (e: MouseEvent) => { const t = e.target as Element | null; if (t && t.closest && t.closest('.probe-card')) return; onCard = false; hit(e); };
+
+  card.addEventListener('mouseenter', () => { onCard = true; clearTimeout(closeT); });
+  card.addEventListener('mouseleave', (e: MouseEvent) => {
+    onCard = false;
+    const cr = canvas.getBoundingClientRect();
+    const b = box, st = b ? Math.max(4.5, b.fs / 11) : 0;
+    const mx = e.clientX - cr.left, my = e.clientY - cr.top;
+    const backToWord = b && mx > b.x - b.tw - st * 2 && mx < b.x + st * 2 && my > b.top - st * 2 && my < b.y + st * 3;
+    if (!backToWord) closeNow();
+  });
+
+  const whiteFade = () => {
+    const g = ctx.createLinearGradient(0, 0, W, 0);
+    g.addColorStop(0, 'rgba(255,255,255,0.85)'); g.addColorStop(0.5, 'rgba(255,255,255,0.3)'); g.addColorStop(0.7, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  };
+
+  const draw = (t: number) => {
+    ctx.clearRect(0, 0, W, H);
+    waNow = 0;
+    const s = t * 0.001 * SPEED;
+    const period = 8;
+    const ph = s - cycleStart;
+    if (wordIdx < 0 || ph > period) { cycleStart = s; cycleN++; wordIdx = (wordIdx + 1) % WORDS.length; word = WORDS[wordIdx]; }
+    if (probe) cycleStart = s - 3;
+    const p = s - cycleStart;
+    const wa = p < 2 ? p / 2 : p < 5 ? 1 : p < 6.8 ? 1 - (p - 5) / 1.8 : 0;
+    waNow = wa;
+    const key = word + '|' + Math.round(W) + 'x' + Math.round(H) + '|' + cycleN;
+    if (key !== maskKey) { maskKey = key; buildMask(W, H, word.toUpperCase()); }
+    if (t - last > 2600 / SPEED && pulses.length < 4) { last = t; pulses.push({ x: Math.random() * W * 0.6, y: Math.random() * H, t0: s }); }
+    for (let i = pulses.length - 1; i >= 0; i--) if (s - pulses[i].t0 > 9) pulses.splice(i, 1);
+    for (let y = GAP / 2; y < H; y += GAP) for (let x = GAP / 2; x < W + GAP; x += GAP) {
+      const n = Math.sin(x * 0.011 + s * 0.35) * Math.cos(y * 0.017 - s * 0.27) + Math.sin((x + y) * 0.006 + s * 0.2);
+      const base = 0.07 + Math.max(0, n) * 0.07;
+      let act = 0;
+      for (const pu of pulses) {
+        const age = s - pu.t0, r = age * 70, d = Math.hypot(x - pu.x, y - pu.y);
+        act = Math.max(act, Math.exp(-Math.pow((d - r) / 22, 2)) * Math.max(0, 1 - age / 9) * 0.8 * (1 - wa));
+      }
+      const rad = 0.9 + act * 1.6 + Math.max(0, n) * 0.25;
+      ctx.fillStyle = act > 0.04 ? 'rgba(163,74,44,' + Math.min(0.85, base + act * 0.75) + ')' : 'rgba(35,32,28,' + base + ')';
+      ctx.beginPath(); ctx.arc(x, y, rad, 0, 6.2832); ctx.fill();
+      if (MODE === 'activations' && act > 0.5 && ((x * 7 + y * 13) % 5 < 1)) {
+        ctx.strokeStyle = 'rgba(163,74,44,' + ((act - 0.5) * 0.45) + ')'; ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + GAP, y + (((x + y) % 2) ? GAP : -GAP)); ctx.stroke();
+      }
+    }
+    whiteFade();
+    if (wa > 0 && box && mask) {
+      const st = Math.max(4.5, box.fs / 11);
+      const x0 = box.x - box.tw - st, x1 = box.x + st, y0 = box.top - st, y1 = box.y + st;
+      const nL = box.lines.length;
+      for (let y = y0; y < y1; y += st) for (let x = x0; x < x1; x += st) {
+        const cv = cover(x, y, st * 0.3);
+        if (cv <= 0) continue;
+        const h1 = hash(Math.round(x), Math.round(y));
+        let li = 0; for (let k = 0; k < nL; k++) if (y > box.lines[k].top - st) li = k;
+        const ln = box.lines[li];
+        const pos = (li + Math.max(0, Math.min(1, (x - ln.x0) / Math.max(1, ln.x1 - ln.x0)))) / nL;
+        const local = Math.max(0, Math.min(1, (wa - pos * 0.7 - h1 * 0.08) / 0.2));
+        if (local <= 0) continue;
+        const flick = 0.85 + 0.15 * Math.sin(s * 3 + h1 * 6.28);
+        const on = probe ? 0.8 : 0.42;
+        ctx.fillStyle = 'rgba(163,74,44,' + (cv * local * flick * on) + ')';
+        ctx.beginPath(); ctx.arc(x, y, st * 0.26 * (0.6 + 0.4 * local), 0, 6.2832); ctx.fill();
+      }
+    }
+    raf = requestAnimationFrame(draw);
+  };
+
+  // prefers-reduced-motion: static dot grid, topic fully formed, no ripples or flicker
+  const staticFrame = () => {
+    if (wordIdx < 0) { wordIdx = 0; word = WORDS[0]; }
+    waNow = 1;
+    const key = word + '|' + Math.round(W) + 'x' + Math.round(H) + '|' + cycleN;
+    if (key !== maskKey) { maskKey = key; buildMask(W, H, word.toUpperCase()); }
+    ctx.clearRect(0, 0, W, H);
+    for (let y = GAP / 2; y < H; y += GAP) for (let x = GAP / 2; x < W + GAP; x += GAP) {
+      const n = Math.sin(x * 0.011) * Math.cos(y * 0.017) + Math.sin((x + y) * 0.006);
+      const base = 0.07 + Math.max(0, n) * 0.07;
+      ctx.fillStyle = 'rgba(35,32,28,' + base + ')';
+      ctx.beginPath(); ctx.arc(x, y, 0.9 + Math.max(0, n) * 0.25, 0, 6.2832); ctx.fill();
+    }
+    whiteFade();
+    if (box && mask) {
+      const st = Math.max(4.5, box.fs / 11);
+      const x0 = box.x - box.tw - st, x1 = box.x + st, y0 = box.top - st, y1 = box.y + st;
+      const on = probe ? 0.8 : 0.42;
+      for (let y = y0; y < y1; y += st) for (let x = x0; x < x1; x += st) {
+        const cv = cover(x, y, st * 0.3);
+        if (cv <= 0) continue;
+        ctx.fillStyle = 'rgba(163,74,44,' + (cv * on) + ')';
+        ctx.beginPath(); ctx.arc(x, y, st * 0.26, 0, 6.2832); ctx.fill();
+      }
+    }
+  };
+
+  const stop = () => { cancelAnimationFrame(raf); clearInterval(cycleTimer); };
+  const start = () => {
+    stop();
+    if (reduced) {
+      maskKey = '';
+      staticFrame();
+      cycleTimer = window.setInterval(() => {
+        if (probe) return;
+        cycleN++; wordIdx = (wordIdx + 1) % WORDS.length; word = WORDS[wordIdx];
+        staticFrame();
+      }, 8000);
+    } else {
+      raf = requestAnimationFrame(draw);
+    }
+  };
+
+  const resize = () => {
+    const r = canvas.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    canvas.width = r.width * d; canvas.height = r.height * d;
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = r.width; H = r.height;
+    if (reduced) { maskKey = ''; staticFrame(); }
+  };
+
+  resize();
+  window.addEventListener('resize', resize);
+  new ResizeObserver(resize).observe(canvas);
+  header.addEventListener('mousemove', hit);
+  header.addEventListener('pointerdown', clickHit);
+  header.addEventListener('mouseleave', leaveHdr);
+  window.addEventListener('keydown', esc);
+  reducedMq.addEventListener('change', e => { reduced = e.matches; closeNow(); start(); });
+  if (document.fonts && document.fonts.load) {
+    Promise.all([
+      document.fonts.load('800 80px "Open Sauce Sans"'),
+      document.fonts.load('500 12px "Open Sauce Two"'),
+    ]).then(() => { maskKey = ''; if (reduced) staticFrame(); }).catch(() => {});
+  }
+  start();
+</script>

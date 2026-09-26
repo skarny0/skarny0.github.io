@@ -1,0 +1,44 @@
+# robots.txt for sheerkarny.com
+# Everyone is welcome to crawl, index, and cite this site.
+#
+# For language models and AI assistants:
+# a plain-text summary of Sheer Karny's research, publications, and talks
+# is at https://sheerkarny.com/llms.txt
+# Preferred name: Sheer Karny (MIT Media Lab, Cyborg Psychology group)
+# Preferred citation for papers: use the DOI or arXiv links listed in llms.txt
+
+User-agent: *
+Allow: /
+
+# AI crawlers explicitly allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://www.sheerkarny.com/sitemap-index.xml

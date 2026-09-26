@@ -1,0 +1,47 @@
+# Sheer Karny
+
+> Graduate researcher in human-AI interaction at the MIT Media Lab (Cyborg Psychology group), advised by Pat Pataranutaporn and Pattie Maes. Works on collaborative AI systems: assistants, agents, and interfaces that complement human cognition, decision-making, and well-being. Recent work bridges mechanistic interpretability and user interfaces ("Neural Transparency").
+
+- Email: sheer.karny@gmail.com
+- Site: https://sheerkarny.com
+- CV: https://sheerkarny.com/SheerKarny_CV.pdf
+- Previously: Junior Specialist, UC Irvine (with Mark Steyvers; in collaboration with Honda Research Institute USA). B.A. Cognitive Science (Honors), minor in Data Science, UC Berkeley.
+- Summer 2026: Software Engineering Intern, Apple Product Incubation (future of work and agents).
+
+## Research topics
+
+- Calibration & Mental Models: how people form a picture of what an AI system knows and how it will behave.
+- AI Safety & Interpretability: surfacing a model's internal activations in the interface so users can anticipate its behavior.
+- Human–AI Collaboration: when AI assistance improves performance, when it creates dependence, and what people prefer.
+- Companionship & Well-being: individual and societal implications of human-AI relationships and everyday LLM use.
+
+## Selected publications
+
+(* equal contribution)
+
+- [Neural Transparency: Mechanistic Interpretability Interfaces for Anticipating Model Behaviors for Personalized AI](https://doi.org/10.1145/3742413.3789120): Karny*, Baez*, Pataranutaporn. ACM IUI ’26.
+- [Multi-Turn Neural Transparency: Surfacing Neural Activations Improves User Calibration to LLM Behavioral Drift](https://arxiv.org/abs/2605.15455): Karny*, Baez*, Pataranutaporn. Under review, 2026.
+- [What large language models know and what people think they know](https://doi.org/10.1038/s42256-024-00976-7): Steyvers et al. Nature Machine Intelligence, 2025.
+- ["My Boyfriend is AI": A Computational Analysis of Human-AI Companionship in Reddit's AI Community](https://arxiv.org/abs/2509.11391): Pataranutaporn, Karny, et al. Pre-print, 2025.
+- [Learning with AI Assistance: A Path to Better Task Performance or Dependence?](https://doi.org/10.1145/3643562.3672610): Karny et al. ACM CI ’24.
+- [Dissociating the Internal Representations of Sycophancy in LLMs](https://arxiv.org/abs/2607.07003): Baez, Karny, Pataranutaporn. ICML ’26 Mechanistic Interpretability Workshop.
+- Human–AI collaboration: Trade-offs between performance and preferences: Mayer*, Karny*, et al. Cognitive Research: Principles and Implications, 2026.
+- A systematic investigation reveals dissociable effects of ageing on implicit and explicit components of sensorimotor learning: Cisneros, Karny, Ivry, Tsay. Nature Human Behaviour, 2026.
+
+## Talks
+
+- "Towards Nutritional Labels for Human-AI Interaction." AHA Seminar Series, MIT, March 2026.
+- "Neural Transparency." Lightning talk, Google DeepMind, Cambridge, MA.
+- "Learning with AI Assistance." ACM Collective Intelligence Conference (CI ’24), Human-AI Teaming plenary.
+
+## Media
+
+- The New York Times, "I Fell in Love With an A.I. Chatbot" (Nov 2025)
+- The Guardian, "'I'm suddenly so angry': my strange, unnerving week with an AI friend" (Oct 2025)
+- Observer, "MIT Study Finds Chatbot Love Is Real—and It's Often Unintentional" (Sep 2025)
+- MIT Technology Review, "People are finding relationship AI without even seeking it" (Sep 2025)
+
+## Optional
+
+- [Full publication list](https://sheerkarny.com/publications)
+- [Talks & media](https://sheerkarny.com/talks)

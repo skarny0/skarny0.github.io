@@ -1,0 +1,56 @@
+---
+import ActivationHeader from '../components/ActivationHeader.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  active?: 'home' | 'pubs' | 'talks' | 'projects';
+}
+
+const {
+  title,
+  description = 'Sheer Karny — graduate researcher at the MIT Media Lab designing assistants, agents, and interfaces that complement human cognition, decision-making, and well-being.',
+  active,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <ActivationHeader active={active}>
+      <slot name="hero" />
+    </ActivationHeader>
+    <main class="wrap">
+      <slot />
+      <section id="contact" class="section contact">
+        <div class="label">Contact</div>
+        <div class="contact-body">
+          <p>MIT Media Lab<br />Cambridge, MA</p>
+          <p class="contact-email"><a href="mailto:sheer.karny@gmail.com">sheer.karny@gmail.com</a></p>
+          <div class="contact-links">
+            <a href="/SheerKarny_CV.pdf" target="_blank">CV (PDF)</a>
+            <a href="https://scholar.google.com/citations?hl=en&user=1FZ9W28AAAAJ" target="_blank">Google Scholar</a>
+            <a href="https://www.linkedin.com/in/sheer-karny/" target="_blank">LinkedIn</a>
+            <a href="https://www.media.mit.edu/people/skarny/overview/" target="_blank">Media Lab</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <span>© 2026 Sheer Karny</span>
+      <span class="foot-right"><a href="/llms.txt" target="_blank">llms.txt</a><span>Updated September 2026</span></span>
+    </footer>
+  </body>
+</html>

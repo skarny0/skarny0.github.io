@@ -1,0 +1,194 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const demos = [
+  {
+    meta: 'IUI ’26 · Interactive demo',
+    title: 'Neural Transparency',
+    img: '',
+    phLabel: 'demo screenshot',
+    desc: 'Users write system prompts, chat with an AI, and see real-time behavioral trait vectors rendered as an interactive D3.js sunburst chart showing ~15 behavioral traits including empathy, toxicity, sycophancy, and sophistication.',
+    url: 'https://multi-turn-transparency.vercel.app/',
+    linkLabel: 'Try the demo',
+  },
+];
+
+const otherProjects = [
+  {
+    meta: 'Installation · with Yufeng Zhao & Max Holschneider',
+    title: 'Anubis',
+    img: '',
+    phLabel: 'installation photo',
+    desc: 'Mulitmodal judgement for whether you can pass into the higher realms or subject to humiliating dance moves.',
+    url: '',
+    linkLabel: '',
+  },
+  {
+    meta: '2023 · Web app',
+    title: 'UsedSurf BoardSearch',
+    img: '',
+    phLabel: 'screenshot',
+    desc: "Search engine for the world's largest used surfboard shop with email notifications for matching inventory.",
+    url: 'https://usedsurf.com/board-search-program/',
+    linkLabel: 'Visit',
+  },
+];
+
+const photos = [
+  ['annapurna-final.jpg', 'Final stretch, Annapurna Circuit'],
+  ['camel-race.jpg', 'Winner of the camel race, Desert Festival in Rajasthan'],
+  ['annapurna-lowlands.jpg', 'Lowlands, Annapurna Circuit'],
+  ['everest-glacier.jpg', 'Tiny people, big glacier — Everest Three Passes Trek'],
+  ['trains.jpg', 'Trains!'],
+  ['camel.jpg', 'Well dressed camel, Rajasthan'],
+  ['dharamshala.jpg', 'Neuroscience Workshop, Dharamshala'],
+  ['baja-1.jpg', 'Deep in Baja'],
+  ['baja-2.jpg', 'Deep in Baja'],
+].map(([file, caption], i) => ({ src: '/images/' + file, caption, n: i + 1 }));
+---
+
+<Layout title="Projects — Sheer Karny" active="projects">
+  <Fragment slot="hero">
+    <div class="hero-inner">
+      <div class="label crumb">§ Projects</div>
+      <h1>Things I've made</h1>
+      <p class="hero-tagline">Interactive demos from research, a few side projects, and photographs from time spent walking and driving far away.</p>
+    </div>
+  </Fragment>
+
+  <section class="section">
+    <div class="label">Writing</div>
+    <article class="writing">
+      <a class="cover" href="#read" data-reader-toggle aria-label="Read Between Us and Utopia">
+        <img src="/images/utopia-cover.jpg" alt="Between Us and Utopia — cover" />
+      </a>
+      <div>
+        <div class="proj-meta">Short fiction · with Matti Gruener</div>
+        <div class="proj-title">Between Us and Utopia</div>
+        <p class="proj-desc">We set out to describe stepping stones between where we are now and a time that might feel like Utopia. Books One and Two were written by a human; for Books Three and Four, we gave AI a voice to extend our characters’ worlds.</p>
+        <div class="toc">
+          <span class="toc-label">Book one</span><span>One Minute War · He Kept His Perspectives</span>
+          <span class="toc-label">Book two</span><span>Borders · Antipodes</span>
+          <span class="toc-label">Book three</span><span>The AI Explains</span>
+          <span class="toc-label">Book four</span><span>After</span>
+        </div>
+        <div class="writing-links">
+          <a href="#read" data-reader-toggle data-reader-label>Read here</a>
+          <a href="/Between_Us_and_Utopia.pdf" target="_blank">Open PDF ↗</a>
+        </div>
+      </div>
+      <div class="reader" id="reader" hidden>
+        <div class="reader-bar">
+          <span>Between Us and Utopia</span>
+          <a href="#read" data-reader-toggle>Close ✕</a>
+        </div>
+        <iframe data-src="/Between_Us_and_Utopia.pdf#view=FitH&toolbar=0" title="Between Us and Utopia"></iframe>
+      </div>
+    </article>
+  </section>
+
+  <section class="section">
+    <div class="label">Demos</div>
+    <div class="proj-list">
+      {demos.map((pj) => (
+        <article class="proj">
+          <figure>
+            {pj.img ? (
+              <img class="proj-img" src={pj.img} alt={pj.title} />
+            ) : (
+              <div class="proj-ph">{pj.phLabel}</div>
+            )}
+          </figure>
+          <div>
+            <div class="proj-meta">{pj.meta}</div>
+            <div class="proj-title">{pj.title}</div>
+            <p class="proj-desc">{pj.desc}</p>
+            {pj.url && <a class="proj-link" href={pj.url} target="_blank">{pj.linkLabel} ↗</a>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="label">Other work</div>
+    <div class="proj-list">
+      {otherProjects.map((pj) => (
+        <article class="proj">
+          <figure>
+            {pj.img ? (
+              <img class="proj-img" src={pj.img} alt={pj.title} />
+            ) : (
+              <div class="proj-ph">{pj.phLabel}</div>
+            )}
+          </figure>
+          <div>
+            <div class="proj-meta">{pj.meta}</div>
+            <div class="proj-title">{pj.title}</div>
+            <p class="proj-desc">{pj.desc}</p>
+            {pj.url && <a class="proj-link" href={pj.url} target="_blank">{pj.linkLabel} ↗</a>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="label">Photographs</div>
+    <div>
+      <p class="photos-intro">After finishing my undergrad, I spent eight months backpacking around Nepal (3 mo.) and India (5 mo.). Much of this was time spent walking in the Himalayas and riding trains. At one point I taught Neuroscience to a group of Tibetan Buddhist Nuns. In December ’23 I drove about 20 hours south into Baja California, much of it off-road, to find some swell.</p>
+      <div class="photo-grid">
+        {photos.map((ph) => (
+          <figure>
+            <img src={ph.src} alt={ph.caption} loading="lazy" />
+            <figcaption class="photo-cap">fig. {ph.n} — {ph.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .writing{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:28px;align-items:start}
+  .cover{position:relative;display:block;max-width:300px;aspect-ratio:284.75/352.75;overflow:hidden;border:1px solid rgba(35,32,28,.14);box-shadow:0 12px 30px rgba(35,32,28,.12);background:#f2f0ec;transition:box-shadow .2s,transform .2s;text-decoration:none}
+  .cover:hover{box-shadow:0 18px 40px rgba(35,32,28,.2);transform:translateY(-2px)}
+  .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .proj-meta{font-family:var(--two);font-weight:500;font-size:12px;color:var(--faint)}
+  .proj-title{font-size:22px;font-weight:500;line-height:1.25;margin-top:6px;letter-spacing:-.01em}
+  .proj-desc{margin:10px 0 0;font-size:16.5px;line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+  .toc{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;margin-top:18px;font-size:15px;line-height:1.4}
+  .toc-label{font-family:var(--two);font-weight:500;font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+  .writing-links{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-family:var(--two);font-size:12px}
+  .reader{grid-column:1 / -1;margin-top:8px;border:1px solid rgba(35,32,28,.14);background:#f2f0ec}
+  .reader[hidden]{display:none}
+  .reader-bar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:10px 14px;border-bottom:1px solid rgba(35,32,28,.1);font-family:var(--two);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .reader-bar a{text-decoration:none}
+  .reader iframe{display:block;width:100%;height:min(88vh,1100px);border:0;background:#ffffff}
+
+  .proj-list{display:flex;flex-direction:column;gap:48px}
+  .proj{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:28px;align-items:start}
+  .proj-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#f2f0ec;border:1px solid rgba(35,32,28,.08)}
+  .proj-ph{width:100%;aspect-ratio:4/3;background:repeating-linear-gradient(135deg,rgba(35,32,28,.05) 0 6px,transparent 6px 12px);border:1px solid rgba(35,32,28,.1);display:flex;align-items:center;justify-content:center;font-family:var(--two);font-size:11px;color:var(--faint)}
+  .proj-link{display:inline-block;margin-top:12px;font-family:var(--two);font-size:12px}
+
+  .photos-intro{margin:0 0 32px;max-width:620px;font-size:18px;line-height:1.65;text-wrap:pretty}
+  .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:28px 20px}
+  .photo-grid img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#f2f0ec}
+  .photo-cap{font-size:11px;letter-spacing:.02em}
+</style>
+
+<script>
+  const reader = document.getElementById('reader') as HTMLElement;
+  const iframe = reader.querySelector('iframe') as HTMLIFrameElement;
+  const label = document.querySelector('[data-reader-label]') as HTMLElement;
+  let open = false;
+  const toggle = (e: Event) => {
+    e.preventDefault();
+    open = !open;
+    if (open && !iframe.src) iframe.src = iframe.dataset.src!;
+    reader.hidden = !open;
+    label.textContent = open ? 'Close reader' : 'Read here';
+  };
+  document.querySelectorAll('[data-reader-toggle]').forEach((el) => el.addEventListener('click', toggle));
+</script>

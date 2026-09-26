@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+type Pub = Awaited<ReturnType<typeof getCollection<'publications'>>>[number];
+
+const pubs = (await getCollection('publications'))
+  .filter((p) => p.data.type !== 'talk')
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+
+const groups: { name: string; items: Pub[] }[] = [
+  { name: 'Preprints & under review', items: pubs.filter((p) => p.data.status !== 'published') },
+  { name: 'Journal articles', items: pubs.filter((p) => p.data.status === 'published' && p.data.type === 'journal') },
+  { name: 'Conference proceedings', items: pubs.filter((p) => p.data.status === 'published' && p.data.type === 'conference') },
+  { name: 'Workshop papers & posters', items: pubs.filter((p) => p.data.status === 'published' && p.data.type === 'poster') },
+];
+
+const pubLink = (p: Pub) =>
+  p.data.links?.doi
+    ? { url: p.data.links.doi, label: 'DOI' }
+    : p.data.links?.arxiv
+      ? { url: p.data.links.arxiv, label: 'arXiv' }
+      : null;
+---
+
+<Layout title="Publications — Sheer Karny" active="pubs">
+  <Fragment slot="hero">
+    <div class="hero-inner">
+      <div class="label crumb">§ Publications</div>
+      <h1>Papers &amp; preprints</h1>
+      <p class="hero-note">* denotes equal contribution</p>
+    </div>
+  </Fragment>
+
+  {groups.map((g) => (
+    <section class="section">
+      <div class="label">{g.name}</div>
+      <div class="pub-list">
+        {g.items.map((p) => (
+          <div class="pub-row">
+            <span class="pub-year">{p.data.year}</span>
+            <div>
+              <div class="pub-title">{p.data.title}</div>
+              <div class="pub-authors">
+                {p.data.authors.map((a, i) => (
+                  <span class={a.startsWith('Karny') ? 'karny' : undefined}>{a}{i < p.data.authors.length - 1 ? ',' : ''}</span>
+                ))}
+              </div>
+              <div class="pub-venue"><em>{p.data.venue}</em></div>
+              {pubLink(p) && (
+                <a class="pub-link" href={pubLink(p)!.url} target="_blank">{pubLink(p)!.label} ↗</a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+</Layout>
+
+<style>
+  .pub-list{display:flex;flex-direction:column}
+  .pub-row{display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:20px 0;border-top:1px solid var(--hair-row)}
+  .pub-year{font-family:var(--two);font-weight:500;font-size:12px;color:var(--faint);padding-top:5px}
+  .pub-title{font-size:19px;font-weight:500;line-height:1.35;text-wrap:pretty}
+  .pub-authors{font-size:15px;line-height:1.5;color:var(--muted);margin-top:6px;display:flex;flex-wrap:wrap;column-gap:5px}
+  .pub-authors .karny{color:var(--ink);font-weight:500}
+  .pub-venue{font-size:15px;color:var(--muted);margin-top:2px}
+  .pub-link{display:inline-block;margin-top:10px;font-family:var(--two);font-weight:500;font-size:12px}
+</style>
