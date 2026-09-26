@@ -59,9 +59,11 @@ const photos = [
   <section class="section">
     <div class="label">Writing</div>
     <article class="writing">
-      <a class="cover" href="#read" data-reader-toggle aria-label="Read Between Us and Utopia">
-        <img src="/images/utopia-cover.jpg" alt="Between Us and Utopia — cover" />
-      </a>
+      <figure>
+        <a class="cover" href="#read" data-reader-toggle aria-label="Read Between Us and Utopia">
+          <img src="/images/utopia-cover.jpg" alt="Between Us and Utopia — cover" />
+        </a>
+      </figure>
       <div>
         <div class="proj-meta">Short fiction · with Matti Gruener</div>
         <div class="proj-title">Between Us and Utopia</div>
@@ -94,7 +96,7 @@ const photos = [
         <article class="proj">
           <figure>
             {pj.img ? (
-              <img class="proj-img" src={pj.img} alt={pj.title} />
+              <div class="crop proj-img"><img src={pj.img} alt={pj.title} /></div>
             ) : (
               <div class="proj-ph">{pj.phLabel}</div>
             )}
@@ -117,7 +119,7 @@ const photos = [
         <article class="proj">
           <figure>
             {pj.img ? (
-              <img class="proj-img" src={pj.img} alt={pj.title} />
+              <div class="crop proj-img"><img src={pj.img} alt={pj.title} /></div>
             ) : (
               <div class="proj-ph">{pj.phLabel}</div>
             )}
@@ -140,7 +142,7 @@ const photos = [
       <div class="photo-grid">
         {photos.map((ph) => (
           <figure>
-            <img src={ph.src} alt={ph.caption} loading="lazy" />
+            <div class="crop photo"><img src={ph.src} alt={ph.caption} loading="lazy" /></div>
             <figcaption class="photo-cap">fig. {ph.n} — {ph.caption}</figcaption>
           </figure>
         ))}
@@ -153,7 +155,7 @@ const photos = [
   .writing{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:28px;align-items:start}
   .cover{position:relative;display:block;max-width:300px;aspect-ratio:284.75/352.75;overflow:hidden;border:1px solid rgba(35,32,28,.14);box-shadow:0 12px 30px rgba(35,32,28,.12);background:#f2f0ec;transition:box-shadow .2s,transform .2s;text-decoration:none}
   .cover:hover{box-shadow:0 18px 40px rgba(35,32,28,.2);transform:translateY(-2px)}
-  .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .cover img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block}
   .proj-meta{font-family:var(--two);font-weight:500;font-size:12px;color:var(--faint)}
   .proj-title{font-size:22px;font-weight:500;line-height:1.25;margin-top:6px;letter-spacing:-.01em}
   .proj-desc{margin:10px 0 0;font-size:16.5px;line-height:1.55;color:var(--ink-2);text-wrap:pretty}
@@ -168,13 +170,13 @@ const photos = [
 
   .proj-list{display:flex;flex-direction:column;gap:48px}
   .proj{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:28px;align-items:start}
-  .proj-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#f2f0ec;border:1px solid rgba(35,32,28,.08)}
+  .proj-img{aspect-ratio:4/3;background:#f2f0ec;border:1px solid rgba(35,32,28,.08)}
   .proj-ph{width:100%;aspect-ratio:4/3;background:repeating-linear-gradient(135deg,rgba(35,32,28,.05) 0 6px,transparent 6px 12px);border:1px solid rgba(35,32,28,.1);display:flex;align-items:center;justify-content:center;font-family:var(--two);font-size:11px;color:var(--faint)}
   .proj-link{display:inline-block;margin-top:12px;font-family:var(--two);font-size:12px}
 
   .photos-intro{margin:0 0 32px;max-width:620px;font-size:18px;line-height:1.65;text-wrap:pretty}
   .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:28px 20px}
-  .photo-grid img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#f2f0ec}
+  .photo{aspect-ratio:4/5;background:#f2f0ec}
   .photo-cap{font-size:11px;letter-spacing:.02em}
 </style>
 

@@ -80,7 +80,13 @@ const current = (key: string) => (active === key ? 'page' : undefined);
   let cycleN = 0, maskKey = '', word = '', wordIdx = -1, cycleStart = 0;
   let mask: Uint8ClampedArray | null = null;
   let box: any = null;
-  let waNow = 0, onCard = false, scrollLock = 0, raf = 0, cycleTimer = 0;
+  let slotDeck: number[] = [], lastSlot = -1;
+  const nextSlot = () => {
+    if (!slotDeck.length) { slotDeck = [...Array(12).keys()].sort(() => Math.random() - 0.5); if (slotDeck[0] === lastSlot) slotDeck.push(slotDeck.shift()!); }
+    lastSlot = slotDeck.shift()!; return lastSlot;
+  };
+  let waNow = 0, phaseP = 0, onCard = false, scrollLock = 0, raf = 0, cycleTimer = 0;
+  let scrollPt: { x: number; y: number } | null = null;
   let closeT: ReturnType<typeof setTimeout> | undefined;
   let probe: { word: string; top: number; left: number; w: number } | null = null;
   const reducedMq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -102,25 +108,40 @@ const current = (key: string) => (active === key ? 'page' : undefined);
     const zx0 = zr.left - cr.left + (wrapped ? 0 : 8), zx1 = wrapped ? zr.right - cr.left : cr.width - 40;
     const zy0 = wrapped ? zr.top - cr.top : (nav ? nav.getBoundingClientRect().bottom - cr.top : 80) + 20;
     const zy1 = wrapped ? zr.bottom - cr.top - 24 : cr.height - 40;
-    const visBottom = Math.min(zy1, window.innerHeight - cr.top - 380);
-    const zyEnd = visBottom - zy0 >= 140 ? visBottom : zy1;
+    // keep phrases high enough that the card (~360px) opens below them inside the viewport
+    const fitBottom = Math.min(zy1, window.innerHeight - (cr.top + window.scrollY) - 360);
+    const zyEnd = fitBottom - zy0 >= 200 ? fitBottom : zy1;
     const zw = zx1 - zx0, zh = zyEnd - zy0;
     if (zw < 160 || zh < 40) { mask = null; box = null; return; }
     const parts = txt.split(' ');
     const wrap = (f: number) => { octx.font = F(f); const out = []; let cur = ''; for (const p of parts) { const t = cur ? cur + ' ' + p : p; if (octx.measureText(t).width <= zw || !cur) cur = t; else { out.push(cur); cur = p; } } if (cur) out.push(cur); return out; };
     const wrapW = (f: number) => { octx.font = F(f); const out = []; let cur = ''; for (const p of parts) { const t = cur ? cur + ' ' + p : p; if (octx.measureText(t).width <= zw * (0.55 + Math.random() * 0.4) || !cur) cur = t; else { out.push(cur); cur = p; } } if (cur) out.push(cur); return out; };
-    let fs = 52 + Math.round(Math.random() * 48), lines = wrapW(fs);
+    let fs = 72, lines = wrapW(fs);
     while (fs > 20 && (lines.length > 4 || lines.length * fs * 1.02 > zh || lines.some(l => octx.measureText(l).width > zw))) { fs -= 2; lines = wrap(fs); }
     octx.font = F(fs); octx.textBaseline = 'alphabetic'; octx.fillStyle = '#000';
     const lh = fs * 1.02, capH = fs * 0.74;
     const widths = lines.map(t => octx.measureText(t).width), bw = Math.max(...widths), bh = capH + (lines.length - 1) * lh;
-    const align = Math.random() < 0.5 ? 'left' : 'right';
-    const bx0 = zx0 + Math.random() * Math.max(0, zw - bw), bx1 = bx0 + bw;
-    const by0 = zy0 + Math.random() * Math.max(0, zh - bh);
+    // 12 slots: 3 columns x 4 rows across the zone, visited in shuffled order with jitter
+    const slot = nextSlot(), col = slot % 3, row = Math.floor(slot / 3);
+    const jit = () => (Math.random() - 0.5) * 0.18;
+    const fx = Math.max(0, Math.min(1, col / 2 + jit())), fy = Math.max(0, Math.min(1, row / 3 + jit()));
+    const align = col === 0 ? 'left' : col === 2 ? 'right' : (Math.random() < 0.5 ? 'left' : 'right');
+    const bx0 = Math.round(zx0 + fx * Math.max(0, zw - bw)), bx1 = bx0 + bw;
+    const by0 = Math.round(zy0 + fy * Math.max(0, zh - bh));
     octx.textAlign = 'left';
-    const L = lines.map((t, i) => { const base = by0 + capH + i * lh; const lw = widths[i]; const lx = align === 'left' ? bx0 : bx1 - lw; octx.fillText(t, lx, base); return { x0: lx, x1: lx + lw, top: base - capH, base }; });
+    const L = lines.map((t, i) => { const base = by0 + capH + i * lh; const lw = widths[i]; const lx = Math.round(align === 'left' ? bx0 : bx1 - lw); octx.fillText(t, lx, Math.round(base)); return { x0: lx, x1: lx + lw, top: base - capH, base }; });
     box = { x: bx1, x0: bx0, y: L[L.length - 1].base, fs, tw: bw, top: L[0].top, lines: L, align };
     mask = octx.getImageData(0, 0, off.width, off.height).data;
+    // fixed dot lattice anchored to each line's own origin, so every letter gets the same dots wherever it lands
+    const st = fs / 11, dots: { x: number; y: number; h: number; pos: number }[] = [];
+    L.forEach((ln, li) => {
+      for (let y = ln.top - st; y < ln.base + st; y += st) for (let x = ln.x0 - st; x < ln.x1 + st; x += st) {
+        if (cover(x, y, st * 0.3) < 0.45) continue;
+        const rx = x - ln.x0, ry = y - ln.top;
+        dots.push({ x, y, h: hash(Math.round(rx * 10), Math.round(ry * 10) + li * 997), pos: (li + Math.max(0, Math.min(1, rx / Math.max(1, ln.x1 - ln.x0)))) / L.length });
+      }
+    });
+    box.dots = dots; box.st = st;
   };
 
   const cover = (x: number, y: number, r: number) => {
@@ -163,8 +184,9 @@ const current = (key: string) => (active === key ? 'page' : undefined);
   const hit = (e: MouseEvent) => {
     const cr = canvas.getBoundingClientRect(), mx = e.clientX - cr.left, my = e.clientY - cr.top;
     const b = box, st = b ? Math.max(4.5, b.fs / 11) : 0;
-    const inside = b && mask && waNow > 0.15 && mx > b.x - b.tw - st * 2 && mx < b.x + st * 2 && my > b.top - st * 2 && my < b.y + st * 3;
+    const inside = b && mask && waNow > 0.15 && phaseP < 5 && mx > b.x - b.tw - st * 2 && mx < b.x + st * 2 && my > b.top - st * 2 && my < b.y + st * 3;
     if (performance.now() < scrollLock) return;
+    if (scrollPt) { if (e.clientX === scrollPt.x && e.clientY === scrollPt.y) return; scrollPt = null; }
     const nk = noteKey(word);
     header.style.cursor = inside && nk ? 'help' : '';
     if (inside && nk) {
@@ -173,7 +195,7 @@ const current = (key: string) => (active === key ? 'page' : undefined);
         const top = b.y + st * 2;
         const w = Math.min(380, cr.width - 32);
         const need = cr.top + top + 380 - window.innerHeight;
-        if (need > 0) { scrollLock = performance.now() + 700; window.scrollBy({ top: need, behavior: 'smooth' }); }
+        if (need > 0) { scrollLock = performance.now() + 700; scrollPt = { x: e.clientX, y: e.clientY }; window.scrollBy({ top: need, behavior: 'smooth' }); }
         openProbe(nk, top, Math.max(16, Math.min(cr.width - w - 16, mx - 190)), w);
       }
     } else if (probe && !onCard) {
@@ -209,8 +231,10 @@ const current = (key: string) => (active === key ? 'page' : undefined);
     const period = 8;
     const ph = s - cycleStart;
     if (wordIdx < 0 || ph > period) { cycleStart = s; cycleN++; wordIdx = (wordIdx + 1) % WORDS.length; word = WORDS[wordIdx]; }
-    if (probe) cycleStart = s - 3;
+    // while probed: let formation finish naturally, then hold (never jump or dissolve)
+    if (probe && s - cycleStart > 4.5) cycleStart = s - 4.5;
     const p = s - cycleStart;
+    phaseP = p;
     const wa = p < 2 ? p / 2 : p < 5 ? 1 : p < 6.8 ? 1 - (p - 5) / 1.8 : 0;
     waNow = wa;
     const key = word + '|' + Math.round(W) + 'x' + Math.round(H) + '|' + cycleN;
@@ -235,21 +259,13 @@ const current = (key: string) => (active === key ? 'page' : undefined);
     }
     whiteFade();
     if (wa > 0 && box && mask) {
-      const st = Math.max(4.5, box.fs / 11);
-      const x0 = box.x - box.tw - st, x1 = box.x + st, y0 = box.top - st, y1 = box.y + st;
-      const nL = box.lines.length;
-      for (let y = y0; y < y1; y += st) for (let x = x0; x < x1; x += st) {
-        const cv = cover(x, y, st * 0.3);
-        if (cv <= 0) continue;
-        const h1 = hash(Math.round(x), Math.round(y));
-        let li = 0; for (let k = 0; k < nL; k++) if (y > box.lines[k].top - st) li = k;
-        const ln = box.lines[li];
-        const pos = (li + Math.max(0, Math.min(1, (x - ln.x0) / Math.max(1, ln.x1 - ln.x0)))) / nL;
+      const st = box.st;
+      for (const { x, y, h: h1, pos } of box.dots) {
         const local = Math.max(0, Math.min(1, (wa - pos * 0.7 - h1 * 0.08) / 0.2));
         if (local <= 0) continue;
         const flick = 0.85 + 0.15 * Math.sin(s * 3 + h1 * 6.28);
         const on = probe ? 0.8 : 0.42;
-        ctx.fillStyle = 'rgba(163,74,44,' + (cv * local * flick * on) + ')';
+        ctx.fillStyle = 'rgba(163,74,44,' + (local * flick * on) + ')';
         ctx.beginPath(); ctx.arc(x, y, st * 0.26 * (0.6 + 0.4 * local), 0, 6.2832); ctx.fill();
       }
     }
@@ -271,13 +287,10 @@ const current = (key: string) => (active === key ? 'page' : undefined);
     }
     whiteFade();
     if (box && mask) {
-      const st = Math.max(4.5, box.fs / 11);
-      const x0 = box.x - box.tw - st, x1 = box.x + st, y0 = box.top - st, y1 = box.y + st;
+      const st = box.st;
       const on = probe ? 0.8 : 0.42;
-      for (let y = y0; y < y1; y += st) for (let x = x0; x < x1; x += st) {
-        const cv = cover(x, y, st * 0.3);
-        if (cv <= 0) continue;
-        ctx.fillStyle = 'rgba(163,74,44,' + (cv * on) + ')';
+      ctx.fillStyle = 'rgba(163,74,44,' + on + ')';
+      for (const { x, y } of box.dots) {
         ctx.beginPath(); ctx.arc(x, y, st * 0.26, 0, 6.2832); ctx.fill();
       }
     }

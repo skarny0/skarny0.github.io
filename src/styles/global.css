@@ -33,7 +33,10 @@ a:hover{color:var(--accent);text-decoration-color:var(--accent)}
 .label{font-family:var(--two);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .section{display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr);gap:40px;padding:56px 0;border-bottom:1px solid var(--hair)}
 .section>.label{padding-top:6px}
-figure{margin:0}
+figure{margin:0;align-self:start}
+/* fixed-ratio crop: set aspect-ratio on the wrapper; the image can't be distorted by grid/flex stretch */
+.crop{position:relative;width:100%;overflow:hidden}
+.crop img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block}
 figcaption{margin-top:10px;font-family:var(--two);font-weight:500;font-size:10.5px;color:var(--faint);letter-spacing:.04em}
 
 /* ---------- Header ---------- */

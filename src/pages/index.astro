@@ -24,11 +24,10 @@ const pubLink = (p: (typeof pubs)[number]) =>
 
   <section class="bio">
     <figure>
-      <img src="/images/headshot.jpg" alt="Sheer Karny" width="600" height="600" />
-      <figcaption>fig. 1 — Cambridge, MA</figcaption>
+      <div class="crop headshot"><img src="/images/headshot.jpg" alt="Sheer Karny" width="600" height="600" /></div>
     </figure>
     <div class="bio-text">
-      <p>Multidisciplinary researcher at the <a href="https://www.media.mit.edu/people/skarny/overview/" target="_blank"><strong>MIT Media Lab</strong></a>, studying human-AI interaction in the <a href="https://cyborglab.org/" target="_blank">Cyborg Psychology</a> group, advised by Pat Pataranutaporn and Pattie Maes. This summer I'm interning at <strong>Apple</strong> on the Product Incubation team, working on the future of work and agents.</p>
+      <p>Multidisciplinary researcher at the <a href="https://www.media.mit.edu/people/skarny/overview/" target="_blank"><strong>MIT Media Lab</strong></a>, studying human-AI interaction in the <a href="https://cyborglab.org/" target="_blank">Cyborg Psychology</a> group, advised by Pat Pataranutaporn and Pattie Maes. This summer I interned with Aaron Zinman as a prototyper on an Incubation team within <strong>Apple</strong>'s Intelligent System Experience org (SWE).</p>
       <p>A through-line of my research is creating collaborative AI systems — designing assistants, agents, and interfaces that complement human cognition, decision-making, and well-being. My recent work bridges mechanistic interpretability (making sense of neural-level activity in LLMs) and user interfaces to create safer human-chatbot interactions, helping dub the term <strong>Neural Transparency</strong>.</p>
       <p>This connects to my contributions to a recent pre-print, <a href="https://arxiv.org/abs/2509.11391" target="_blank"><em>"My Boyfriend is AI"</em></a>, underscoring a desire to understand the individual and societal-level implications of the increasing prevalence of human-AI companionship. This work has been covered by <strong>MIT Tech Review</strong>, <strong>The Guardian</strong>, and <strong>The New York Times</strong>, among others.</p>
       <p class="bio-prev">Previously a Junior Specialist at UC Irvine working with Mark Steyvers on human-AI teaming, in collaboration with Honda Research Institute USA. B.A. in Cognitive Science (Honors) with a minor in Data Science from UC Berkeley.</p>
@@ -50,23 +49,13 @@ const pubLink = (p: (typeof pubs)[number]) =>
       <a class="all-pubs" href="/publications">All publications →</a>
     </div>
   </section>
-
-  <section class="figs">
-    <figure>
-      <img src="/images/medialab.jpg" alt="At the MIT Media Lab" />
-      <figcaption>fig. 2 — Advancing Humans with AI, MIT Media Lab</figcaption>
-    </figure>
-    <figure>
-      <img class="figs-arches" src="/images/arches.jpg" alt="Under the arches" />
-      <figcaption>fig. 3 — Cupertino, summer 2026</figcaption>
-    </figure>
-  </section>
 </Layout>
 
 <style>
   .bio{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:48px;padding:80px 0 72px;border-bottom:1px solid var(--hair)}
   .bio figure{max-width:300px}
-  .bio img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;filter:grayscale(.15)}
+  .headshot{aspect-ratio:1/1}
+  .headshot img{filter:grayscale(.15)}
   .bio-text{grid-column:span 2;min-width:0;font-size:18px;line-height:1.65;text-wrap:pretty}
   .bio-text p{margin:0 0 20px}
   .bio-text strong{font-weight:600}
@@ -78,8 +67,4 @@ const pubLink = (p: (typeof pubs)[number]) =>
   .sel-title{font-size:19px;font-weight:500;line-height:1.35;text-decoration:none;text-wrap:pretty}
   .sel-venue{font-size:15px;color:var(--muted);margin-top:4px}
   .all-pubs{margin-top:20px;font-family:var(--two);font-weight:500;font-size:12px;align-self:flex-start}
-
-  .figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:32px;padding:72px 0;border-bottom:1px solid var(--hair)}
-  .figs img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
-  .figs .figs-arches{object-position:center 70%}
 </style>

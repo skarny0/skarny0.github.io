@@ -6,7 +6,7 @@
 - Site: https://sheerkarny.com
 - CV: https://sheerkarny.com/SheerKarny_CV.pdf
 - Previously: Junior Specialist, UC Irvine (with Mark Steyvers; in collaboration with Honda Research Institute USA). B.A. Cognitive Science (Honors), minor in Data Science, UC Berkeley.
-- Summer 2026: Software Engineering Intern, Apple Product Incubation (future of work and agents).
+- Summer 2026: Interned with Aaron Zinman as a prototyper on an Incubation team within Apple's Intelligent System Experience org (SWE).
 
 ## Research topics
 
