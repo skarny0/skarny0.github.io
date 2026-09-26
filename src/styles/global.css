@@ -89,13 +89,13 @@ figcaption{margin-top:10px;font-family:var(--two);font-weight:500;font-size:10.5
   .section{grid-template-columns:minmax(0,1fr);gap:20px;padding:44px 0}
   .section>.label{padding-top:0}
   .site-nav{padding:14px 20px}
-  .site-nav .links{flex:1;justify-content:space-between;gap:0 12px}
+  .site-nav .links{gap:0 22px}
   .site-nav a{padding:10px 0}
-  .hero-home{padding:36px 20px 56px}
+  .hero-home{padding:36px 20px 24px;gap:20px}
   .hero-home .eyebrow{margin-bottom:14px}
   .hero-home h1{font-size:clamp(48px,14vw,64px)}
   .hero-home .tagline{margin-top:18px;font-size:19px}
-  .hero-home [data-topic-zone]{display:none}
+  .hero-home [data-topic-zone]{flex-basis:100%;min-height:170px}
   .hero-inner{padding:36px 20px 40px}
   .hero-inner h1{font-size:clamp(38px,11vw,52px);line-height:1.02}
   .hero-inner .hero-tagline{font-size:17px}
@@ -104,4 +104,16 @@ figcaption{margin-top:10px;font-family:var(--two);font-weight:500;font-size:10.5
   .contact-links{gap:4px 20px}
   .contact-links a{padding:8px 0}
   .site-footer{padding:20px 20px calc(32px + env(safe-area-inset-bottom))}
+}
+/* standard iPhones: spread the five links edge to edge so they fit on one row */
+@media (min-width:371px) and (max-width:420px){
+  .site-nav .links{flex:1;justify-content:space-between;gap:0 12px}
+}
+/* too narrow for one row (iPhone SE): wrap left-aligned */
+@media (max-width:370px){
+  .site-nav .links{gap:0 18px}
+}
+/* small tablets and unfolded foldables in landscape (e.g. iPhone Duo, 890px): keep the topic zone beside the text */
+@media (min-width:701px) and (max-width:960px){
+  .hero-home .hero-text{flex-basis:500px}
 }

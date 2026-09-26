@@ -189,6 +189,10 @@ const photos = [
     .photo-cap{font-size:10px}
     .writing-links a,.proj-link{padding:6px 0}
   }
+  /* unfolded foldables (e.g. iPhone Duo, 626px) */
+  @media (min-width:561px) and (max-width:700px){
+    .photo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  }
 </style>
 
 <script>

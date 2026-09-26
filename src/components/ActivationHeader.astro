@@ -99,7 +99,7 @@ const current = (key: string) => (active === key ? 'page' : undefined);
     const F = (f: number) => '800 ' + f + 'px "Open Sauce Sans", "Helvetica Neue", Arial, sans-serif';
     const cr = canvas.getBoundingClientRect();
     const zone = header.querySelector('[data-topic-zone]');
-    if (!zone || cr.width < 700) { mask = null; box = null; return; }
+    if (!zone || !zone.getClientRects().length) { mask = null; box = null; return; }
     const zr = zone.getBoundingClientRect();
     const nav = header.querySelector('nav');
     const h1el = header.querySelector('h1');
@@ -313,6 +313,8 @@ const current = (key: string) => (active === key ? 'page' : undefined);
 
   const resize = () => {
     const r = canvas.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    // a fold/unfold or rotation reflows the header: an open card would point at the old phrase position
+    if (Math.round(r.width) !== Math.round(W)) closeNow();
     canvas.width = r.width * d; canvas.height = r.height * d;
     ctx.setTransform(d, 0, 0, d, 0, 0);
     W = r.width; H = r.height;

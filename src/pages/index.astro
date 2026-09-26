@@ -67,12 +67,17 @@ const pubLink = (p: (typeof pubs)[number]) =>
   .sel-title{font-size:19px;font-weight:500;line-height:1.35;text-decoration:none;text-wrap:pretty}
   .sel-venue{font-size:15px;color:var(--muted);margin-top:4px}
   @media (max-width:700px){
-    .bio{grid-template-columns:minmax(0,1fr);gap:32px;padding:44px 0}
-    .bio figure{max-width:220px}
-    .bio-text{grid-column:auto;font-size:17px}
+    .bio{gap:28px;padding:44px 0}
+    .bio-text{font-size:17px}
     .bio-text .bio-prev{font-size:16px}
     .sel-row{grid-template-columns:44px minmax(0,1fr);gap:12px}
     .sel-title{font-size:18px}
+  }
+  /* phones and folded foldables: stack photo above text */
+  @media (max-width:560px){
+    .bio{grid-template-columns:minmax(0,1fr)}
+    .bio figure{max-width:220px}
+    .bio-text{grid-column:auto}
   }
   .all-pubs{margin-top:20px;font-family:var(--two);font-weight:500;font-size:12px;align-self:flex-start}
 </style>
