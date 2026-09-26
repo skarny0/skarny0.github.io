@@ -67,4 +67,10 @@ const pubLink = (p: Pub) =>
   .pub-authors .karny{color:var(--ink);font-weight:500}
   .pub-venue{font-size:15px;color:var(--muted);margin-top:2px}
   .pub-link{display:inline-block;margin-top:10px;font-family:var(--two);font-weight:500;font-size:12px}
+  @media (max-width:700px){
+    .pub-row{grid-template-columns:44px minmax(0,1fr);gap:12px;padding:18px 0}
+    .pub-title{font-size:18px}
+    .pub-authors,.pub-venue{font-size:14.5px}
+    .pub-link{padding:6px 0}
+  }
 </style>

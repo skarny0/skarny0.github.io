@@ -52,7 +52,7 @@ const pubLink = (p: (typeof pubs)[number]) =>
 </Layout>
 
 <style>
-  .bio{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:48px;padding:80px 0 72px;border-bottom:1px solid var(--hair)}
+  .bio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px;padding:80px 0 72px;border-bottom:1px solid var(--hair)}
   .bio figure{max-width:300px}
   .headshot{aspect-ratio:1/1}
   .headshot img{filter:grayscale(.15)}
@@ -66,5 +66,13 @@ const pubLink = (p: (typeof pubs)[number]) =>
   .sel-year{font-family:var(--two);font-weight:500;font-size:12px;color:var(--faint);padding-top:5px}
   .sel-title{font-size:19px;font-weight:500;line-height:1.35;text-decoration:none;text-wrap:pretty}
   .sel-venue{font-size:15px;color:var(--muted);margin-top:4px}
+  @media (max-width:700px){
+    .bio{grid-template-columns:minmax(0,1fr);gap:32px;padding:44px 0}
+    .bio figure{max-width:220px}
+    .bio-text{grid-column:auto;font-size:17px}
+    .bio-text .bio-prev{font-size:16px}
+    .sel-row{grid-template-columns:44px minmax(0,1fr);gap:12px}
+    .sel-title{font-size:18px}
+  }
   .all-pubs{margin-top:20px;font-family:var(--two);font-weight:500;font-size:12px;align-self:flex-start}
 </style>

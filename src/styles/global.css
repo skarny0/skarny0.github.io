@@ -23,9 +23,11 @@
   --two:'Open Sauce Two',sans-serif;
 }
 html,body{margin:0;background:#ffffff;color:var(--ink)}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{-webkit-tap-highlight-color:rgba(163,74,44,.12)}
 body{font-family:var(--sans);-webkit-font-smoothing:antialiased}
 a{color:var(--ink);font-weight:500;text-decoration:underline;text-decoration-color:rgba(35,32,28,.3);text-underline-offset:3px}
-a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+@media (hover:hover){a:hover{color:var(--accent);text-decoration-color:var(--accent)}}
 ::selection{background:#ecd9c9}
 
 /* ---------- Shared layout ---------- */
@@ -80,3 +82,26 @@ figcaption{margin-top:10px;font-family:var(--two);font-weight:500;font-size:10.5
 .site-footer{max-width:1240px;margin:0 auto;padding:24px 32px 40px;border-top:1px solid var(--hair);font-family:var(--two);font-weight:500;font-size:11px;color:var(--faint);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .site-footer .foot-right{display:flex;gap:16px}
 .site-footer a{color:var(--faint);font-weight:500}
+
+/* ---------- Phones ---------- */
+@media (max-width:700px){
+  .wrap{padding:0 20px}
+  .section{grid-template-columns:minmax(0,1fr);gap:20px;padding:44px 0}
+  .section>.label{padding-top:0}
+  .site-nav{padding:14px 20px}
+  .site-nav .links{flex:1;justify-content:space-between;gap:0 12px}
+  .site-nav a{padding:10px 0}
+  .hero-home{padding:36px 20px 56px}
+  .hero-home .eyebrow{margin-bottom:14px}
+  .hero-home h1{font-size:clamp(48px,14vw,64px)}
+  .hero-home .tagline{margin-top:18px;font-size:19px}
+  .hero-home [data-topic-zone]{display:none}
+  .hero-inner{padding:36px 20px 40px}
+  .hero-inner h1{font-size:clamp(38px,11vw,52px);line-height:1.02}
+  .hero-inner .hero-tagline{font-size:17px}
+  .contact.section{padding:48px 0 64px}
+  .contact-body{font-size:19px}
+  .contact-links{gap:4px 20px}
+  .contact-links a{padding:8px 0}
+  .site-footer{padding:20px 20px calc(32px + env(safe-area-inset-bottom))}
+}

@@ -154,7 +154,7 @@ const photos = [
 <style>
   .writing{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:28px;align-items:start}
   .cover{position:relative;display:block;max-width:300px;aspect-ratio:284.75/352.75;overflow:hidden;border:1px solid rgba(35,32,28,.14);box-shadow:0 12px 30px rgba(35,32,28,.12);background:#f2f0ec;transition:box-shadow .2s,transform .2s;text-decoration:none}
-  .cover:hover{box-shadow:0 18px 40px rgba(35,32,28,.2);transform:translateY(-2px)}
+  @media (hover:hover){.cover:hover{box-shadow:0 18px 40px rgba(35,32,28,.2);transform:translateY(-2px)}}
   .cover img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block}
   .proj-meta{font-family:var(--two);font-weight:500;font-size:12px;color:var(--faint)}
   .proj-title{font-size:22px;font-weight:500;line-height:1.25;margin-top:6px;letter-spacing:-.01em}
@@ -178,6 +178,17 @@ const photos = [
   .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:28px 20px}
   .photo{aspect-ratio:4/5;background:#f2f0ec}
   .photo-cap{font-size:11px;letter-spacing:.02em}
+  @media (max-width:700px){
+    .writing,.proj{gap:22px}
+    .cover{max-width:220px}
+    .proj-title{font-size:20px}
+    .proj-desc{font-size:16px}
+    .proj-list{gap:40px}
+    .photos-intro{font-size:17px}
+    .photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
+    .photo-cap{font-size:10px}
+    .writing-links a,.proj-link{padding:6px 0}
+  }
 </style>
 
 <script>
@@ -185,8 +196,11 @@ const photos = [
   const iframe = reader.querySelector('iframe') as HTMLIFrameElement;
   const label = document.querySelector('[data-reader-label]') as HTMLElement;
   let open = false;
+  // iOS/iPadOS Safari shows only a static first page of a PDF inside an iframe, so open it directly there
+  const iOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   const toggle = (e: Event) => {
     e.preventDefault();
+    if (iOS) { window.open('/Between_Us_and_Utopia.pdf', '_blank'); return; }
     open = !open;
     if (open && !iframe.src) iframe.src = iframe.dataset.src!;
     reader.hidden = !open;

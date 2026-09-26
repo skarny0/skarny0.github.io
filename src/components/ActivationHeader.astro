@@ -326,6 +326,8 @@ const current = (key: string) => (active === key ? 'page' : undefined);
   header.addEventListener('pointerdown', clickHit);
   header.addEventListener('mouseleave', leaveHdr);
   window.addEventListener('keydown', esc);
+  // touch has no mouseleave: a tap outside the header closes the card
+  document.addEventListener('pointerdown', (e) => { if (probe && !header.contains(e.target as Node)) closeNow(); });
   reducedMq.addEventListener('change', e => { reduced = e.matches; closeNow(); start(); });
   if (document.fonts && document.fonts.load) {
     Promise.all([

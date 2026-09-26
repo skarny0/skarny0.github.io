@@ -61,4 +61,11 @@ const media = [
   .media-outlet{font-family:var(--two);font-weight:500;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
   .media-title{font-size:18px;line-height:1.4;text-wrap:pretty}
   .media-date{font-family:var(--two);font-weight:500;font-size:12px;color:var(--faint);white-space:nowrap}
+  @media (max-width:700px){
+    .talk-row{grid-template-columns:minmax(0,1fr);gap:6px;padding:18px 0}
+    .talk-title{font-size:18px}
+    .talk-meta{order:-1;padding-top:0}
+    .media-row{grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;padding:16px 0}
+    .media-title{grid-column:1 / -1;font-size:17px}
+  }
 </style>
